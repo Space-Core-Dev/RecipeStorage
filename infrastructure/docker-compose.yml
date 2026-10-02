@@ -1,0 +1,52 @@
+services:
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq-1
+        ports:
+          - "5672:5672"
+          - "15672:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: dev
+            RABBITMQ_DEFAULT_PASS: dev
+        restart: unless-stopped
+        volumes:
+          - rabbit_data:/var/lib/rabbitmq
+
+    mongodb:
+        image: mongo:7.0
+        container_name: mongodb-1
+        hostname: mongodb
+        ports:
+            - "27017:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: mongo
+            MONGO_INITDB_ROOT_PASSWORD: mongo
+        command: ["--replSet", "rs0"]
+        volumes:
+          - mongo_data:/data/db
+        entrypoint: >
+            bash -c "
+            mkdir -p /data/configdb &&
+            openssl rand -base64 756 > mongo-keyfile > /data/configdb/keyfile &&
+            chmod 400 /data/configdb/keyfile &&
+            chown 999:999 /data/configdb/keyfile &&
+            exec mongod --replSet rs0 --keyFile /data/configdb/keyfile --bind_ip_all"
+        restart: unless-stopped
+
+
+    redis:
+        image: redis:alpine
+        container_name: redis-1
+        ports:
+            - "6379:6379"
+        command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes
+        volumes:
+            - redis_data:/data
+        restart: unless-stopped
+            
+
+volumes:
+    mongo_data:
+    redis_data:
+    rabbit_data:
+

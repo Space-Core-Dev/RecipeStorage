@@ -1,0 +1,38 @@
+backend/
+├── adapter/
+│   ├── in/
+│   │   ├── rabbit/        # consumers
+│   │   └── http/          # HTTP handlers
+│   └── out/
+│       ├── rabbit/        # publishers
+│       └── repository/    # concrete Mongo repositories per entity, built on store.Repository[T]
+├── application/
+│   ├── cqs/
+│   │   ├── command/       # command input/output shapes — absorbed what the old events/ folder held
+│   │   └── query/         # query input/output shapes
+│   ├── dto/               # application-layer DTOs
+│   ├── port/
+│   │   ├── in/             # inbound ports (use-case interfaces)
+│   │   └── out/
+│   │       ├── publisher/  # outbound publisher port interfaces
+│   │       └── repository/ # outbound repository port interfaces, business-shaped (e.g. RecipeRepository)
+│   └── services/
+│       ├── usecase/        # command & query handlers — direct calls, no dispatcher
+│       └── ...              # implementations of core/services abstractions (logging, health)
+├── core/
+│   ├── domain/
+│   │   ├── entity/           # entities; value objects owned by exactly one entity live colocated here
+│   │   └── models/           # value objects genuinely shared across multiple entities
+│   ├── errors/                # domain/application errors
+│   └── services/              # abstractions only — logging, health, shared domain logic
+├── store/                      # Mongo-specific infrastructure
+│   ├── errors/                   # store-specific errors (Mongo error translation)
+│   ├── dbcontext.go              # DbContext / Transaction (Session) / Repository[T] abstractions
+│   └── mongo/                     # concrete Mongo implementation + connection init
+├── tests/                        # separated test layer
+├── .env
+├── .env.example
+├── go.mod
+├── go.sum
+├── main.go                        # wiring, graceful shutdown
+└── README.md
