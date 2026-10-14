@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/Space-Core-Dev/Mistaken.Recipe.Broker/declarations"
 	"github.com/Space-Core-Dev/Mistaken.Recipe/application/services/helpers"
 	"github.com/joho/godotenv"
 	"github.com/rabbitmq/amqp091-go"
@@ -38,38 +39,9 @@ func main() {
 	}
 	defer ch.Close()
 
-	// the exchanges, queues, bindings declarations are here. Use functions below
-}
-
-func exchangesDeclare(ch *amqp091.Channel, exchanges []string, t string) error {
-	for _, v := range exchanges {
-		err := ch.ExchangeDeclare(v, t, true, false, false, false, nil)
-		if err != nil {
-			return err
-		}
+	declaration := declarations.New(ch, "topic", queuePref, keyPref, names)
+	err = declaration.Start()
+	if err != nil {
+		log.Fatalf("broker declarations failed: %v", err)
 	}
-
-	return nil
-}
-
-func queuesDeclare(ch *amqp091.Channel, queues []string) error {
-	for _, v := range queues {
-		_, err := ch.QueueDeclare(v, true, false, false, false, nil)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func queuesBinding(ch *amqp091.Channel, queues []string, exchange string) error {
-	for _, v := range queues {
-		err := ch.QueueBind(v, v, exchange, false, nil)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
 }

@@ -1,0 +1,6 @@
+github.com/Space-Core-Dev/Mistaken.Utils v1.0.3 h1:gUrnebjdor0cdIs5St9N5WjcpBUG8LWxGrZyXdMkFFQ=
+github.com/Space-Core-Dev/Mistaken.Utils v1.0.3/go.mod h1:+4q4QVjmG1YoKRLEpHKXh/qSqDfDEiPbhVwg506qz6c=
+github.com/rabbitmq/amqp091-go v1.15.0 h1:LEQL4/yp48/Wigt6A6XOu18RQRo8ZHtB5I/KZJn+gkw=
+github.com/rabbitmq/amqp091-go v1.15.0/go.mod h1:Hy4jKW5kQART1u+JkDTF9YYOQUHXqMuhrgxOEeS7G4o=
+go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
+go.uber.org/goleak v1.3.0/go.mod h1:CoHD4mav9JJNrW/WLlf7HGZPjdw8EucARQHekz1X6bE=

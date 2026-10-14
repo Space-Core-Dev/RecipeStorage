@@ -1,12 +1,13 @@
-module github.com/Space-Core-Dev/Mistaken.Recipe //Should be changed for any microservice
+module github.com/Space-Core-Dev/Mistaken.Recipe //TODO: Should be changed for any microservice
 
 go 1.26.3
 
 require (
-	github.com/Space-Core-Dev/Mistaken.Utils v1.0.2
+	github.com/Space-Core-Dev/Mistaken.Utils v1.0.3
 	github.com/joho/godotenv v1.5.1
 	github.com/rabbitmq/amqp091-go v1.15.0
 	go.mongodb.org/mongo-driver/v2 v2.9.1
+	github.com/Space-Core-Dev/Mistaken.Recipe.Broker v0.0.0-undetermined
 )
 
 require (
@@ -18,4 +19,8 @@ require (
 	golang.org/x/crypto v0.53.0 // indirect
 	golang.org/x/sync v0.21.0 // indirect
 	golang.org/x/text v0.39.0 // indirect
+)
+
+replace (
+	github.com/Space-Core-Dev/Mistaken.Recipe.Broker => ../shared/broker //TODO: set a proper path before use
 )
